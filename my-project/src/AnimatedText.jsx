@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"; // Import React explicitly for hooks
 import { Typewriter } from "react-simple-typewriter";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
@@ -15,12 +15,31 @@ function AnimatedText() {
     return () => clearTimeout(timer);
   }, []); // Empty dependency array ensures this runs only once
 
+  // Focus management for accessibility
+  const handleYesClick = () => {
+    navigate("/challenges");
+    // Optionally set focus to a specific element on the Challenges page
+  };
+
+  const handleNoClick = () => {
+    navigate("/challenges");
+    // Optionally set focus to a specific element on the Challenges page
+  };
+
   return (
-    <div className="absolute flex flex-col items-center justify-center text-white gap-15 top-60 right-[20%] w-[60%] p-1">
+    <div
+      className="absolute flex flex-col items-center justify-center text-white gap-15 top-60 right-[20%] w-[60%] p-1"
+      role="region"
+      aria-label="Welcome Animation"
+    >
       {/* Content container with red border, limited to content size */}
-      <div className="p-4 rounded-lg">
-        {/* Typing Effect for "Welcome, Operator!" */}
-        <h1 className="text-4xl font-bold m-20" style={{ minHeight: "60px" }}>
+      <div className=" p-4 rounded-lg">
+        {/* Typing Effect for "Welcome Operator!" */}
+        <h1
+          className="text-4xl font-bold m-20"
+          style={{ minHeight: "60px" }}
+          aria-live="polite"
+        >
           <Typewriter
             words={["Welcome Operator!"]}
             loop={false}
@@ -35,6 +54,7 @@ function AnimatedText() {
           className={`transition-opacity duration-1000 ${
             showContent ? "opacity-100" : "opacity-0"
           }`}
+          aria-hidden={!showContent}
         >
           {/* Second Text */}
           <h2 className="mt-4 text-2xl font-light mb-15">
@@ -46,7 +66,8 @@ function AnimatedText() {
             {/* Yes Button */}
             <button
               className="bg-red-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-700 transition hover:-translate-y-1 flying-button"
-              onClick={() => navigate("/challenges")} // Navigate to Challenges page
+              onClick={handleYesClick}
+              aria-label="Navigate to Challenges (Yes)"
             >
               Yes
             </button>
@@ -59,7 +80,8 @@ function AnimatedText() {
               onMouseLeave={(e) => {
                 e.target.innerText = "No";
               }}
-              onClick={() => navigate("/challenges")} // Navigate to Challenges page
+              onClick={handleNoClick}
+              aria-label="Navigate to Challenges (No)"
             >
               No
             </button>
