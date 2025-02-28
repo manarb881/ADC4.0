@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import Countdown from "react-countdown";
+import Countdown from 'react-countdown';
 import { Link } from "react-router-dom";
 
 
