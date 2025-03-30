@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import { Menu } from "lucide-react";
 
 function NavBar() {
-  const [activeLink, setActiveLink] = useState(null); // Track the active link
-  const [menuOpen, setMenuOpen] = useState(false); // Track hamburger menu state
+  const [activeLink, setActiveLink] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // Custom renderer function for the countdown
+  // Countdown Renderer
   const renderer = ({ days, hours, minutes, seconds }) => {
     return (
-      <div className="flex flex-wrap justify-center items-center text-l font-bold text-pink-400">
+      <div className="flex flex-wrap justify-center items-center text-l font-bold text-pink-400 ">
         <div className="mx-2">
           <span>{String(days).padStart(2, "0")}</span>
           <span className="text-white"> Days</span>
@@ -35,55 +35,62 @@ function NavBar() {
   };
 
   return (
-    <div className="p-4 w-[90%]  text-white md:flex items-center justify-between ml-10 ">
+    <div className="p-4 w-[90%] text-white md:flex items-center justify-between ml-10">
       <div className="flex items-center justify-between w-full md:w-[40%]">
         {/* Logo */}
         <img src="/ADC.png" alt="Logo" className="h-20 md:h-40" />
 
-        {/* Hamburger Menu (small screens only) */}
-        <button
-          className="md:hidden block"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
+        {/* Hamburger Menu (small screens) */}
+        <button className="md:hidden block" onClick={() => setMenuOpen(!menuOpen)}>
           <Menu className="text-white h-8 w-8" />
         </button>
 
-        {/* Navigation Links (hidden on small screens, shown on large screens) */}
-        <div className="hidden md:flex space-x-6">
+        {/* Navigation Links (Large Screens) */}
+        <div className="hidden md:flex space-x-6 ml-20">
           <Link
             to="/"
-            className={`hover:text-pink-500 transition-all ${
-              activeLink === "welcome" ? "text-pink-500" : ""
-            }`}
+            className={`hover:text-pink-500 transition-all ${activeLink === "welcome" ? "text-pink-500" : ""}`}
             onClick={() => setActiveLink("welcome")}
           >
             Welcome
           </Link>
           <Link
             to="/Challenges"
-            className={`hover:text-pink-500 transition-all ${
-              activeLink === "challenges" ? "text-pink-500" : ""
-            }`}
+            className={`hover:text-pink-500 transition-all ${activeLink === "challenges" ? "text-pink-500" : ""}`}
             onClick={() => setActiveLink("challenges")}
           >
             Challenges
           </Link>
+          <a
+            href="https://leaderboard-frontend-pink.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-pink-500 transition-all"
+          >
+            Leaderboard
+          </a>
+          <a
+            href="https://discord.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-pink-500 transition-all"
+          >
+            Discord
+          </a>
         </div>
       </div>
 
-      {/* Countdown Timer (below logo and menu on small screens) */}
+      {/* Countdown Timer */}
       <div className="mt-4 md:mt-0 md:flex md:justify-center">
         <Countdown date={new Date("2025-12-31T23:59:59")} renderer={renderer} />
       </div>
 
-      {/* Hamburger Menu Dropdown (small screens only) */}
+      {/* Mobile Menu Dropdown */}
       {menuOpen && (
         <div className="absolute top-16 left-[50%] w-[30%] bg-white text-gray-800 p-4 space-y-4 shadow-md z-10">
           <Link
             to="/"
-            className={`block hover:text-pink-500 transition-all ${
-              activeLink === "welcome" ? "text-pink-500" : ""
-            }`}
+            className="block hover:text-pink-500 transition-all"
             onClick={() => {
               setActiveLink("welcome");
               setMenuOpen(false);
@@ -93,9 +100,7 @@ function NavBar() {
           </Link>
           <Link
             to="/Challenges"
-            className={`block hover:text-pink-500 transition-all ${
-              activeLink === "challenges" ? "text-pink-500" : ""
-            }`}
+            className="block hover:text-pink-500 transition-all"
             onClick={() => {
               setActiveLink("challenges");
               setMenuOpen(false);
@@ -103,6 +108,24 @@ function NavBar() {
           >
             Challenges
           </Link>
+          <a
+            href="https://leaderboard-frontend-pink.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block hover:text-pink-500 transition-all"
+            onClick={() => setMenuOpen(false)}
+          >
+            Leaderboard
+          </a>
+          <a
+            href="https://discord.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block hover:text-pink-500 transition-all"
+            onClick={() => setMenuOpen(false)}
+          >
+            Discord
+          </a>
         </div>
       )}
     </div>
